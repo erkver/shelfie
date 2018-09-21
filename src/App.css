@@ -1,17 +1,27 @@
+/* @import url('https://meyerweb.com/eric/tools/css/reset/reset.css'); */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+/* colors: 
+#ab2a19 
+#d34735
+#ed6b5a
+3ad886
+ */
+
+* {
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color: #ab2a19;
+  height: 15vh;
   color: white;
+  text-transform: uppercase;
 }
 
 .App-title {

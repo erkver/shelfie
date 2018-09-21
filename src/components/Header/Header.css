@@ -1,0 +1,17 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 15vh;
+  width: 100vw;
+  margin: 0 35px;
+  font-size: 2em;
+}
+
+.logo {
+  background-color: white;
+  width: 5vw;
+  height: 10vh;
+  border-radius: 50%;
+  margin: 0 25px;
+}
