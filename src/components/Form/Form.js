@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "./Form.css";
 
 export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product_id: 0,
       name: "",
       price: 0,
       image_url: "",
@@ -16,8 +16,8 @@ export default class Form extends Component {
     this.handleImgInput = this.handleImgInput.bind(this);
     this.clearInputs = this.clearInputs.bind(this);
     this.addItem = this.addItem.bind(this);
-    // this.initializeEdit = this.initializeEdit.bind(this);
     this.editItem = this.editItem.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   handleNameInput(e) {
@@ -35,17 +35,10 @@ export default class Form extends Component {
   clearInputs() {
     this.setState({name: "", price: 0, image_url: ""});
   }
-
-  // initializeEdit(product_id, name, price, image_url) {
-  //   // const { product_id, name, price, image_url } = this.props.editItem;
-  //   // const { product_id, name, price, image_url } = this.props.selectItem
-  //   this.setState({product_id, name, price, image_url});
-  //   // this.toggleEdit();
-  // }
   
-  // // toggleEdit() {
-  // //   if(this.state.toggle === !this.state.toggle)
-  // // }
+  handleToggle() {
+    this.setState({toggle: !this.state.toggle});
+  }
   // componentDidUpdate(prevProps) {
   //   console.log(prevProps, this.props.editItem)
   //   if(this.props.editItem.product_id !== prevProps.items.product_id) {
@@ -53,6 +46,19 @@ export default class Form extends Component {
   //     this.initializeEdit({product_id, name, price, image_url});
   //   }
   // }
+
+  componentDidMount() {
+    this.findItem();
+  }
+
+  findItem(product_id, name, price, image_url) {
+    if(this.state.toggle === true) {
+      axios.get(`api/item/${product_id}`, { name, price, image_url }).then(res => {
+        const { name, price, image_url } = res.data
+        this.setState({name, price, image_url});
+      }).catch(err => console.log(err));
+    } 
+  }
 
   addItem(name, price, image_url) {
     axios.post('/api/item', {name, price, image_url}).then(res => {
@@ -62,7 +68,7 @@ export default class Form extends Component {
   }
 
   editItem(product_id, name, price, image_url) {
-    console.log(this.props.editItem, product_id, name), 
+    // console.log(this.props.editItem, product_id, name), 
     axios.put(`api/item/${product_id}`, {name, price, image_url}).then(res => {
       this.props.getPosts(res.data);
       this.clearInputs();
@@ -71,31 +77,42 @@ export default class Form extends Component {
 
   render() {
     const { name, price, image_url } = this.state;
-    return <div className="form-container">
-      <h3>Image URL: </h3>
-      <input 
-        placeholder="Image URL" 
-        type="text" 
-        onChange={this.handleImgInput} 
-        value={this.state.image_url} />
-      <h3>Product Name: </h3>
-      <input 
-        placeholder="Name" 
-        type="text" 
-        onChange={this.handleNameInput} 
-        value={this.state.name} />
-      <h3>Price: </h3>
-      <input 
-        placeholder="Price" 
-        type="Number" 
-        onChange={this.handlePriceInput} 
-        value={this.state.price} />
-      <button 
-        onClick={() => this.clearInputs()}>Cancel</button>
-      <button 
-        onClick={() => {this.addItem(name, price, image_url); this.clearInputs()}}>Add To Inventory</button>
-      <button 
-        onClick={() => {this.initializeEdit(); this.editItem(this.props.editItem.product_id, name, price, image_url)}}>Edit</button>
-      </div>;
+    return (
+      <div className="form-container">
+        <div className="image-holder"></div>
+        <h3 className="form-title">Image URL: </h3>
+        <input 
+          placeholder="Image URL" 
+          type="text" 
+          onChange={this.handleImgInput} 
+          value={this.state.image_url}
+          className="form-input" />
+        <h3 className="form-title">Product Name: </h3>
+        <input 
+          placeholder="Name" 
+          type="text" 
+          onChange={this.handleNameInput} 
+          value={this.state.name}
+          className="form-input" />
+        <h3 className="form-title">Price: </h3>
+        <input 
+          placeholder="Price" 
+          type="Number" 
+          onChange={this.handlePriceInput} 
+          value={this.state.price}
+          className="form-input" />
+        <div className="form-btn-cont">
+          <button
+            className="form-btn" 
+            onClick={() => this.clearInputs()}>Cancel</button>
+          <button
+            className="form-btn" 
+            onClick={() => {this.addItem(name, price, image_url); this.clearInputs()}}>Add To Inventory</button>
+          <button
+            className="form-btn" 
+            onClick={() => {this.editItem(this.props.editItem.product_id, name, price, image_url)}}>Save Changes</button>
+        </div>
+      </div>
+    );
   }
 }

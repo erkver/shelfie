@@ -2,27 +2,18 @@ import React,{ Component } from "react";
 import Product from "../Product/Product";
 import './Dashboard.css'
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
-      editItem: {}
+      items: []
     }
-      this.newItem = this.newItem.bind(this);
-      this.selectedItem = this.selectedItem.bind(this);
+    this.newItem = this.newItem.bind(this);
   }
 
   newItem(list) {
     this.setState({ items: list })
-  }
-
-  selectedItem(product_id, name, price, image_url) {
-    let select = { product_id, name, price, image_url }
-    this.setState({ editItem: select });
-    console.log(this.state.editItem)
   }
 
   componentDidMount() {
@@ -34,7 +25,7 @@ export default class Dashboard extends Component {
 
   deleteItem = (product_id) => {
     axios.delete(`/api/item/${product_id}`).then(res => {
-      this.props.getList(res.data);
+      this.setState(res.data);
     })
   }
 

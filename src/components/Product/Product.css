@@ -16,11 +16,40 @@
 
 .price-container {
   display: flex;
-  width: 200px;
+  width: 250px;
   justify-items: auto;
+  margin-left: 20px;
+  font-size: 24px;
+  color: black;
 }
 
 .name-container {
   display: flex;
-  width: 200px;
+  width: 250px;
+  margin-left: 20px;
+  font-size: 20px;
+  color: black;
+}
+
+.product-btn-cont{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 165px;
+  width: 250px;
+  margin: 0 20px;
+}
+
+.product-btn {
+  background-color: #3ad886;
+  color: black;
+  border-radius: 10px;
+  width: 75px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border: solid #3ad886;
+  font-size: 16px;
 }

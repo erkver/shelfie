@@ -8,6 +8,17 @@ module.exports = {
       console.log(err);
     });
   },
+  getOne: (req, res) => {
+    const db = req.app.get('db');
+    const { name, price, image_url } = req.body;
+    const{ id } = req.params;
+    db.get_item([id, name, price, image_url]).then(item => {
+      return res.status(200).json(item);
+    }).catch(err => {
+      res.status(500).send({ errorMessage: "Something went wrong" });
+      console.log(err);
+    });
+  },
   create: (req, res) => {
     const db = req.app.get('db');
     const { name, price, image_url } = req.body;

@@ -16,6 +16,7 @@ massive(process.env.CONNECTION_STRING).then(db => {
 }).catch(err => console.log(err));
 
 app.get('/api/items', ctrl.get);
+app.get('/api/item/:id', ctrl.getOne);
 app.post('/api/item', ctrl.create);
 app.delete('/api/item/:id', ctrl.remove);
 app.put('/api/item/:id', ctrl.update);
