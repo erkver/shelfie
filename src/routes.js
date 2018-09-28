@@ -8,7 +8,7 @@ import Form from './components/Form/Form';
 export default (
   <Switch>
     <Route path="/" exact component={Dashboard} />
-    <Route path="/add" component={Form} />
+    <Route path="/add" exact component={Form} />
     <Route path='/edit/:id' component={Form} />
   </Switch>
 );

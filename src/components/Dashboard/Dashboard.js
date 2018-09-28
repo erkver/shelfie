@@ -1,42 +1,36 @@
 import React,{ Component } from "react";
 import Product from "../Product/Product";
 import './Dashboard.css'
-import axios from "axios";
+import { connect } from "react-redux";
+import { getItems, deleteItem, getOne } from "../../ducks/reducer";
+// import axios from "axios";
 
-export default class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: []
-    }
-    this.newItem = this.newItem.bind(this);
-  }
-
-  newItem(list) {
-    this.setState({ items: list })
-  }
-
+class Dashboard extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     items: []
+  //   }
+  // }
+  
+  
   componentDidMount() {
-    axios.get('/api/items').then(res => {
-      console.log(res);
-      this.setState({ items: res.data });
-    }).catch(err => console.log(err));
-  }
-
-  deleteItem = (product_id) => {
-    axios.delete(`/api/item/${product_id}`).then(res => {
-      this.setState(res.data);
-    })
+    this.props.getItems();
+    // axios.get('/api/items').then(res => {
+    //   this.setState({items: res.data});
+    // }).catch(err => console.log(err));
   }
 
   render(){
-    const { items } = this.state;
+    const { items, deleteItem, getOne } = this.props;
+    // const { items } = this.state;
+    // console.log(this.props);
     let itemList = items.map((item, i) => (
       <div className="dashboard-item" key={i}>
       <Product 
       item={item} 
-      deleteItem={this.deleteItem}
-      selectItem={this.selectedItem}
+      deleteItem={deleteItem}
+      getOne={getOne}
       />
       </div>
     ))
@@ -47,3 +41,7 @@ export default class Dashboard extends Component {
     )
   }
 }
+
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps, {getItems, deleteItem, getOne})(Dashboard);
